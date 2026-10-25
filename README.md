@@ -45,61 +45,64 @@ python main.py
 
 ```mermaid
 flowchart TD
-    subgraph UI ["1. Operations Console (React + Vite + Tailwind CSS)"]
-        A["Warehouse Dispatch Operator"] --> B["Interactive Order Dispatch Form"]
-        B --> C["Dynamic Policy Threshold Slider (T = 0.10 to 0.40)"]
-        C --> D["Preset Testing Scenarios (High Risk COD / Shield VIP / Low Risk)"]
+    subgraph UI ["Operations Console (React + Vite)"]
+        direction TB
+        A["Warehouse Dispatch Operator"]
+        B["Order Simulation Form"]
+        C["Dynamic Policy Threshold Slider (T = 0.10 - 0.40)"]
+        A --> B --> C
     end
 
-    UI -->|"HTTP POST /api/v1/predict"| API_Layer
-
-    subgraph API_Layer ["2. API & Ingestion Layer (FastAPI)"]
-        E["FastAPI Gateway"] --> F["Pydantic Schema Validation"]
-        F -->|"Invalid Field Format"| G["Structured 422 Unprocessable Entity"]
-        F -->|"Validated Order Payload"| H["ModelService Orchestrator"]
+    subgraph API ["API & Validation Gateway (FastAPI)"]
+        direction TB
+        D["POST /api/v1/predict"]
+        E["Pydantic Schema Validation"]
+        F["Defensive Error Handler (HTTP 422)"]
+        D --> E
+        E -.->|"Invalid Field"| F
     end
 
-    subgraph ML_Pipeline ["3. ML Intelligence & Feature Engineering"]
-        H --> I["KestrelPreprocessor"]
-        I --> J["October 2025 Gateway Bug Handler (100x Paise-to-Rupee Correction)"]
-        J --> K["Feature Enrichment (Prior Return Ratios, Customer Tenure, Velocity)"]
-        K --> L["NLP Delivery Note Parser (Access Codes, Fragile, Landmark Flags)"]
-        L --> M["CatBoost v1.0 Classifier (51 Leak-Free Features)"]
-        M --> N["Raw Model Probability"]
-        N --> O["Odds Calibration (Re-aligned to ~11.4% True Population Base Rate)"]
-        O --> P["TreeExplainer SHAP Engine"]
-        P --> Q["Top Contributing Risk Drivers"]
+    subgraph ML ["Feature Pipeline & ML Engine"]
+        direction TB
+        G["Gateway Anomaly Handler (100x Paise Correction)"]
+        H["Feature Enrichment (Prior Returns, Velocity, Delivery SLA)"]
+        I["NLP Delivery Note Parser (Access Codes, Fragile Flags)"]
+        J["CatBoost v1.0 Classifier (51 Leak-Free Features)"]
+        K["Odds Calibration (~11.4% Base Prevalence)"]
+        L["TreeExplainer SHAP Engine"]
+        G --> H --> I --> J --> K --> L
     end
 
-    subgraph Ops_Engine ["4. Business Decision & Guardrail Engine"]
-        O --> R{"Is Shield Member?"}
-        R -->|"Yes (High LTV VIP)"| S["SHIELD_CONCIERGE_OUTREACH<br/>Priority outreach; Do NOT hold dispatch"]
-        R -->|"No"| T{"Calibrated Risk vs Policy Threshold"}
-        T -->|"Risk < 11%"| U["FAST_TRACK_DISPATCH<br/>Immediate shipment; Zero operational friction"]
-        T -->|"11% <= Risk < 40%"| V["TRIGGER_CONFIRMATION_CALL<br/>Automated Rs. 45 outreach; 35% return reduction"]
-        T -->|"Risk >= 40%"| W["DESK_MANUAL_REVIEW<br/>Route to service desk; Verify address & COD intent"]
+    subgraph Policy ["Business Decision Engine"]
+        direction TB
+        M{"Shield VIP Member?"}
+        N["SHIELD_CONCIERGE_OUTREACH<br/>Priority outreach; Do not hold dispatch"]
+        O{"Return Risk vs Threshold"}
+        P["FAST_TRACK_DISPATCH<br/>Immediate ship (Risk < 11%)"]
+        Q["TRIGGER_CONFIRMATION_CALL<br/>Automated Rs. 45 outreach (11% - 40%)"]
+        R["DESK_MANUAL_REVIEW<br/>Verify address & COD intent (>= 40%)"]
+
+        M -->|"Yes"| N
+        M -->|"No"| O
+        O -->|"Low Risk"| P
+        O -->|"Moderate Risk"| Q
+        O -->|"High Risk"| R
     end
 
-    subgraph Persistence ["5. Audit Trail & Presentation"]
-        S --> X["Decision Card (Return Risk %, Operational Action, Reasons, P&L Impact)"]
-        U --> X
-        V --> X
-        W --> X
-        X --> Y["Session Audit Log (logs/prediction_audit.jsonl)"]
-        X -->|"JSON Response (< 20ms SLA)"| UI
+    subgraph Output ["Dispatch Decision & Audit Trail"]
+        direction TB
+        S["Decision Card (Return Risk %, Reasons, Net Savings)"]
+        T[("Prediction Audit Log<br/>logs/prediction_audit.jsonl")]
+        S --> T
     end
 
-    classDef ui fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
-    classDef api fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#6b21a8;
-    classDef ml fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e;
-    classDef ops fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#15803d;
-    classDef logs fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
-
-    class UI,A,B,C,D ui;
-    class API_Layer,E,F,G,H api;
-    class ML_Pipeline,I,J,K,L,M,N,O,P,Q ml;
-    class Ops_Engine,R,S,T,U,V,W ops;
-    class Persistence,X,Y logs;
+    UI -->|"HTTP Request"| D
+    E -->|"Valid Order Payload"| G
+    L --> M
+    N --> S
+    P --> S
+    Q --> S
+    R --> S
 ```
 
 ---
