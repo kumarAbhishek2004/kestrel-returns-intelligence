@@ -1,0 +1,117 @@
+{
+  "features": [
+    "sku",
+    "family",
+    "sales_channel",
+    "payment_mode",
+    "city",
+    "state",
+    "order_value_cleaned",
+    "list_price_inr",
+    "discount_pct",
+    "absolute_discount_inr",
+    "is_deep_discount",
+    "qty",
+    "promised_delivery_days",
+    "customer_prior_orders",
+    "customer_prior_returns",
+    "prior_return_ratio",
+    "is_chronic_returner",
+    "is_first_buyer",
+    "customer_tenure_days",
+    "customer_order_velocity",
+    "shield_member",
+    "product_model_tier",
+    "warranty_months",
+    "price_per_warranty_month",
+    "product_market_days",
+    "is_cod",
+    "is_prepaid_upi",
+    "is_prepaid_card",
+    "is_emi",
+    "is_gift",
+    "is_late_night",
+    "is_festive_season",
+    "is_weekend",
+    "day_of_week",
+    "hour",
+    "is_walkin_missing_pincode",
+    "is_home_state",
+    "note_is_missing",
+    "note_call_before",
+    "note_no_lift",
+    "note_leave_security",
+    "note_time_slot",
+    "note_landmark",
+    "note_fragile",
+    "high_value_cod_risk",
+    "delivery_delay_cod_risk",
+    "shield_cod_hazard",
+    "shield_chronic_hazard",
+    "impulse_remorse_risk",
+    "family_risk_score",
+    "state_risk_score"
+  ],
+  "top_importance": [
+    {
+      "feature": "promised_delivery_days",
+      "importance": 6.526430617108209
+    },
+    {
+      "feature": "absolute_discount_inr",
+      "importance": 6.028479904502208
+    },
+    {
+      "feature": "product_market_days",
+      "importance": 5.748178456883082
+    },
+    {
+      "feature": "sales_channel",
+      "importance": 4.849156285645541
+    },
+    {
+      "feature": "city",
+      "importance": 4.75046636091368
+    },
+    {
+      "feature": "hour",
+      "importance": 4.52150172088649
+    },
+    {
+      "feature": "order_value_cleaned",
+      "importance": 4.446353702432598
+    },
+    {
+      "feature": "discount_pct",
+      "importance": 4.413472679535715
+    },
+    {
+      "feature": "customer_tenure_days",
+      "importance": 4.368718178774177
+    },
+    {
+      "feature": "customer_order_velocity",
+      "importance": 4.023803664857525
+    },
+    {
+      "feature": "shield_member",
+      "importance": 3.6884632424663955
+    },
+    {
+      "feature": "state",
+      "importance": 3.623164103987498
+    },
+    {
+      "feature": "prior_return_ratio",
+      "importance": 3.4335297312057764
+    },
+    {
+      "feature": "high_value_cod_risk",
+      "importance": 3.210151890900606
+    },
+    {
+      "feature": "sku",
+      "importance": 3.1883828995764105
+    }
+  ]
+}
